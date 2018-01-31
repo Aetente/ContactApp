@@ -87,6 +87,7 @@ public class LoginView extends MvpAppCompatFragment implements ILoginView {
     public void onDestroyView() {
 
         super.onDestroyView();
+        int i =0;
         mUnbinder.unbind();
     }
 }
