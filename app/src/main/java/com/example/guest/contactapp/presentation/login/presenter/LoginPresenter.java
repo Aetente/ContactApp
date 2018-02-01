@@ -5,11 +5,15 @@ import android.support.annotation.NonNull;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.example.guest.contactapp.App;
 import com.example.guest.contactapp.business.login.ILoginInteractor;
 import com.example.guest.contactapp.business.login.ILoginInteractorCallback;
 import com.example.guest.contactapp.business.login.InteractorEmailException;
 import com.example.guest.contactapp.business.login.InteractorPasswordException;
+import com.example.guest.contactapp.di.login.LoginModule;
 import com.example.guest.contactapp.presentation.login.view.ILoginView;
+
+import javax.inject.Inject;
 
 /**
  * Created by Guest on 31.01.2018.
@@ -17,10 +21,13 @@ import com.example.guest.contactapp.presentation.login.view.ILoginView;
 @InjectViewState
 public class LoginPresenter extends MvpPresenter<ILoginView> implements ILoginPresenter, ILoginInteractorCallback {
 
+
+    @Inject
     ILoginInteractor mInteractor;
     private Handler handler;
 
     public LoginPresenter() {
+        App.get().plusLoginModule(new LoginModule()).inject(this);
         handler = new Handler();
     }
 
@@ -33,9 +40,11 @@ public class LoginPresenter extends MvpPresenter<ILoginView> implements ILoginPr
         } catch (InteractorEmailException e) {
             e.printStackTrace();
             getViewState().putEmailError(e.getMessage());
+            getViewState().hideProgress();
         } catch (InteractorPasswordException e) {
             e.printStackTrace();
             getViewState().putPasswordError(e.getMessage());
+            getViewState().hideProgress();
         }
     }
 
@@ -48,9 +57,11 @@ public class LoginPresenter extends MvpPresenter<ILoginView> implements ILoginPr
         } catch (InteractorEmailException e) {
             e.printStackTrace();
             getViewState().putEmailError(e.getMessage());
+            getViewState().hideProgress();
         } catch (InteractorPasswordException e) {
             e.printStackTrace();
             getViewState().putPasswordError(e.getMessage());
+            getViewState().hideProgress();
         }
     }
 
@@ -89,5 +100,11 @@ public class LoginPresenter extends MvpPresenter<ILoginView> implements ILoginPr
     @Override
     public void onError(String error) {
         handler.post(() -> handleError(error));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        App.get().clearLoginComponent();
     }
 }

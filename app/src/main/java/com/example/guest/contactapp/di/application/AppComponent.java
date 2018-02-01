@@ -1,5 +1,10 @@
 package com.example.guest.contactapp.di.application;
 
+import com.example.guest.contactapp.di.login.LoginComponent;
+import com.example.guest.contactapp.di.login.LoginModule;
+
+import javax.inject.Singleton;
+
 import dagger.Component;
 
 /**
@@ -7,6 +12,7 @@ import dagger.Component;
  */
 
 @Component(modules = {AppModule.class})
+@Singleton
 public interface AppComponent {
-
+    LoginComponent plus(LoginModule loginModule);
 }
