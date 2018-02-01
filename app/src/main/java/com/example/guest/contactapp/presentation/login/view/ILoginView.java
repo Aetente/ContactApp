@@ -16,4 +16,7 @@ public interface ILoginView extends MvpView{
     void onLoginSucces(@NonNull String message);
     void showError(@NonNull String error);
     void hideErrorDialog();
+    void putEmailError(@NonNull String error);
+    void putPasswordError(@NonNull String error);
+    void clearError();
 }

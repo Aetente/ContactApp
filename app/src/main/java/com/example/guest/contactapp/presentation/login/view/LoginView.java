@@ -106,6 +106,22 @@ public class LoginView extends MvpAppCompatFragment implements ILoginView {
         }
     }
 
+    @Override
+    public void putEmailError(@NonNull String error) {
+        mInputPassword.setError(error);
+    }
+
+    @Override
+    public void putPasswordError(@NonNull String error) {
+        mInputPassword.setError(error);
+    }
+
+    @Override
+    public void clearError() {
+        mInputPassword.setError(null);
+        mInputEmail.setError(null);
+    }
+
 
     @Override
     public void onDestroyView() {
